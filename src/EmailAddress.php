@@ -20,8 +20,10 @@ class EmailAddress
      */
     public function __construct(string $emailAddressString)
     {
-        if (!filter_var($emailAddressString, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException('The specified value does not appear to be a valid email address.');
+        if (filter_var($emailAddressString, FILTER_VALIDATE_EMAIL) === false) {
+            throw new InvalidArgumentException(
+                sprintf('The specified value [%s] does not appear to be a valid email address.', $emailAddressString)
+            );
         }
 
         $this->emailAddressString = $emailAddressString;
@@ -70,8 +72,8 @@ class EmailAddress
     /**
      * Attempts to parse the specified email address.
      *
-     * @param string       $emailAddressString The email address string to try parsing.
-     * @param EmailAddress $emailAddress       The variable to assign the email address to.
+     * @param string $emailAddressString The email address string to try parsing.
+     * @param EmailAddress $emailAddress The variable to assign the email address to.
      *
      * @return bool Whether the specified email address could be parsed.
      */
