@@ -7,26 +7,26 @@ use InvalidArgumentException;
 class EmailAddress
 {
     /**
-     * @var string
+     * @var string The email address string.
      */
-    private $emailAddressString;
+    private $emailAddress;
 
     /**
      * EmailAddress constructor.
      *
-     * @param string $emailAddressString
+     * @param string $emailAddress
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(string $emailAddressString)
+    public function __construct(string $emailAddress)
     {
-        if (filter_var($emailAddressString, FILTER_VALIDATE_EMAIL) === false) {
+        if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL) === false) {
             throw new InvalidArgumentException(
-                sprintf('The specified value [%s] does not appear to be a valid email address.', $emailAddressString)
+                sprintf('The specified value [%s] does not appear to be a valid email address.', $emailAddress)
             );
         }
 
-        $this->emailAddressString = $emailAddressString;
+        $this->emailAddress = $emailAddress;
     }
 
     /**
@@ -36,7 +36,7 @@ class EmailAddress
      */
     public function __toString(): string
     {
-        return $this->emailAddressString;
+        return $this->emailAddress;
     }
 
     /**
@@ -46,7 +46,7 @@ class EmailAddress
      */
     public function value(): string
     {
-        return $this->emailAddressString;
+        return $this->emailAddress;
     }
 
     /**
@@ -56,7 +56,7 @@ class EmailAddress
      */
     public function localPart(): string
     {
-        return substr($this->emailAddressString, 0, strrpos($this->emailAddressString, '@'));
+        return substr($this->emailAddress, 0, strrpos($this->emailAddress, '@'));
     }
 
     /**
@@ -66,14 +66,14 @@ class EmailAddress
      */
     public function domainPart(): string
     {
-        return substr($this->emailAddressString, strrpos($this->emailAddressString, '@') + 1);
+        return substr($this->emailAddress, strrpos($this->emailAddress, '@') + 1);
     }
 
     /**
      * Attempts to parse the specified email address.
      *
-     * @param string $emailAddressString The email address string to try parsing.
-     * @param EmailAddress $emailAddress The variable to assign the email address to.
+     * @param string       $emailAddressString The email address string to try parsing.
+     * @param EmailAddress $emailAddress       The variable to assign the email address to.
      *
      * @return bool Whether the specified email address could be parsed.
      */
