@@ -70,6 +70,18 @@ class EmailAddress
     }
 
     /**
+     * Indicates whether the specified email address equals this email address.
+     *
+     * @param EmailAddress $other
+     *
+     * @return bool
+     */
+    public function equals(EmailAddress $other)
+    {
+        return $this->emailAddress === $other->emailAddress;
+    }
+
+    /**
      * Attempts to parse the specified email address.
      *
      * @param string       $emailAddressString The email address string to try parsing.

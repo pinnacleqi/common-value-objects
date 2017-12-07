@@ -66,6 +66,22 @@ class EmailAddressTest extends TestCase
     }
 
     /**
+     * @param EmailAddress $first
+     * @param EmailAddress $second
+     * @param bool         $shouldEqual
+     *
+     * @dataProvider equalityTestEmailAddresses
+     */
+    public function testEquals(EmailAddress $first, EmailAddress $second, bool $shouldEqual)
+    {
+        if ($shouldEqual) {
+            $this->assertTrue($first->equals($second));
+        } else {
+            $this->assertFalse($first->equals($second));
+        }
+    }
+
+    /**
      * @return string[][]
      */
     public function invalidEmailAddressStrings(): array
@@ -106,6 +122,17 @@ class EmailAddressTest extends TestCase
                 'customer/department=shipping',
                 'example.com',
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function equalityTestEmailAddresses(): array
+    {
+        return [
+            [new EmailAddress('fake@example.com'), new EmailAddress('fake@example.com'), true],
+            [new EmailAddress('fake@example.com'), new EmailAddress('diff@example.com'), false],
         ];
     }
 }
