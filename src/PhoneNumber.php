@@ -133,10 +133,10 @@ class PhoneNumber
      */
     public function format(string $format = '(%a) %e-%n %x', string $extensionPrefix = 'x')
     {
-        $areaCode = $this->areaCode();
-        $exchange = $this->exchange();
+        $areaCode         = $this->areaCode();
+        $exchange         = $this->exchange();
         $subscriberNumber = $this->subscriberNumber();
-        $extension = $this->extension();
+        $extension        = $this->extension();
 
         // We don't support escaping percent characters yet, but we can implement later if it's ever actually needed
 
@@ -154,6 +154,18 @@ class PhoneNumber
         }
 
         return $formattedNumber;
+    }
+
+    /**
+     * Indicates whether the specified phone number equals this phone number.
+     *
+     * @param PhoneNumber $other
+     *
+     * @return bool
+     */
+    public function equals(PhoneNumber $other)
+    {
+        return $this->phoneNumber === $other->phoneNumber;
     }
 
     /**
