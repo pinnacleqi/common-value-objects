@@ -39,6 +39,22 @@ class PhoneNumberTest extends TestCase
     }
 
     /**
+     * Data provider for testing equals.
+     *
+     * @return array
+     */
+    public function equalityTestPhoneNumbers(): array
+    {
+        return [
+            [new PhoneNumber('8015551212'), new PhoneNumber('8015551210'), false],
+            [new PhoneNumber('8015551212'), new PhoneNumber('8015551212'), true],
+            [new PhoneNumber('8015551212 x55'), new PhoneNumber('8015551212 ext. 55'), true],
+            [new PhoneNumber('8015551212'), null, false],
+            [new PhoneNumber('8015551212'), "string", false],
+        ];
+    }
+
+    /**
      * Test the default format.
      */
     public function testDefaultFormat()
@@ -53,5 +69,21 @@ class PhoneNumberTest extends TestCase
         $phoneNumber = new PhoneNumber('8015551212 ext. 51');
 
         $this->assertSame('x51', $phoneNumber->format('%x'));
+    }
+
+    /**
+     * @param PhoneNumber      $first
+     * @param PhoneNumber|null $second
+     * @param bool             $shouldEqual
+     *
+     * @dataProvider equalityTestPhoneNumbers
+     */
+    public function testEquals(PhoneNumber $first, $second, bool $shouldEqual)
+    {
+        if ($shouldEqual) {
+            $this->assertTrue($first->equals($second));
+        } else {
+            $this->assertFalse($first->equals($second));
+        }
     }
 }

@@ -72,12 +72,20 @@ class EmailAddress
     /**
      * Indicates whether the specified email address equals this email address.
      *
-     * @param EmailAddress $other
+     * @param EmailAddress|null $other
      *
      * @return bool
      */
-    public function equals(EmailAddress $other)
+    public function equals($other)
     {
+        if ($other === null) {
+            return false;
+        }
+
+        if (!$other instanceof EmailAddress) {
+            return false;
+        }
+
         return $this->emailAddress === $other->emailAddress;
     }
 

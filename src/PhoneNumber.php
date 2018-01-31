@@ -159,12 +159,20 @@ class PhoneNumber
     /**
      * Indicates whether the specified phone number equals this phone number.
      *
-     * @param PhoneNumber $other
+     * @param PhoneNumber|null $other
      *
      * @return bool
      */
-    public function equals(PhoneNumber $other)
+    public function equals($other)
     {
+        if ($other === null) {
+            return false;
+        }
+
+        if (!$other instanceof PhoneNumber) {
+            return false;
+        }
+
         return $this->phoneNumber === $other->phoneNumber;
     }
 

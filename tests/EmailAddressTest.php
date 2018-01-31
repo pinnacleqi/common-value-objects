@@ -66,13 +66,13 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @param EmailAddress $first
-     * @param EmailAddress $second
-     * @param bool         $shouldEqual
+     * @param EmailAddress      $first
+     * @param EmailAddress|null $second
+     * @param bool              $shouldEqual
      *
      * @dataProvider equalityTestEmailAddresses
      */
-    public function testEquals(EmailAddress $first, EmailAddress $second, bool $shouldEqual)
+    public function testEquals(EmailAddress $first, $second, bool $shouldEqual)
     {
         if ($shouldEqual) {
             $this->assertTrue($first->equals($second));
@@ -133,6 +133,8 @@ class EmailAddressTest extends TestCase
         return [
             [new EmailAddress('fake@example.com'), new EmailAddress('fake@example.com'), true],
             [new EmailAddress('fake@example.com'), new EmailAddress('diff@example.com'), false],
+            [new EmailAddress('fake@example.com'), null, false],
+            [new EmailAddress('fake@example.com'), 'string', false],
         ];
     }
 }
