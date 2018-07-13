@@ -22,7 +22,7 @@ class EmailAddress
     {
         if (filter_var($emailAddress, FILTER_VALIDATE_EMAIL) === false) {
             throw new InvalidArgumentException(
-                sprintf('The specified value [%s] does not appear to be a valid email address.', $emailAddress)
+                sprintf('The specified value (%s) does not appear to be a valid email address.', $emailAddress)
             );
         }
 
@@ -73,10 +73,12 @@ class EmailAddress
      * Indicates whether the specified email address equals this email address.
      *
      * @param EmailAddress|null $other
+     * @param bool              $caseInsensitive Whether to compare addresses in a case-insensitive manner. Defaults to
+     *                                           false.
      *
      * @return bool
      */
-    public function equals($other)
+    public function equals($other, bool $caseInsensitive = false)
     {
         if ($other === null) {
             return false;
@@ -86,7 +88,11 @@ class EmailAddress
             return false;
         }
 
-        return $this->emailAddress === $other->emailAddress;
+        if ($caseInsensitive) {
+            return mb_strtolower($this->emailAddress) === mb_strtolower($other->emailAddress);
+        } else {
+            return $this->emailAddress === $other->emailAddress;
+        }
     }
 
     /**

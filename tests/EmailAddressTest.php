@@ -69,15 +69,16 @@ class EmailAddressTest extends TestCase
      * @param EmailAddress      $first
      * @param EmailAddress|null $second
      * @param bool              $shouldEqual
+     * @param bool              $caseInsensitive
      *
      * @dataProvider equalityTestEmailAddresses
      */
-    public function testEquals(EmailAddress $first, $second, bool $shouldEqual)
+    public function testEquals(EmailAddress $first, $second, bool $shouldEqual, bool $caseInsensitive = false)
     {
         if ($shouldEqual) {
-            $this->assertTrue($first->equals($second));
+            $this->assertTrue($first->equals($second, $caseInsensitive));
         } else {
-            $this->assertFalse($first->equals($second));
+            $this->assertFalse($first->equals($second, $caseInsensitive));
         }
     }
 
@@ -135,6 +136,8 @@ class EmailAddressTest extends TestCase
             [new EmailAddress('fake@example.com'), new EmailAddress('diff@example.com'), false],
             [new EmailAddress('fake@example.com'), null, false],
             [new EmailAddress('fake@example.com'), 'string', false],
+            [new EmailAddress('fake@example.com'), new EmailAddress('Fake@example.com'), false],
+            [new EmailAddress('fake@example.com'), new EmailAddress('FAKE@example.com'), true, true],
         ];
     }
 }
