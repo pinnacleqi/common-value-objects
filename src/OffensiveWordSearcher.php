@@ -12,9 +12,9 @@ class OffensiveWordSearcher
     /**
      * @var string Path to offensive words file.
      */
-    const OFFENSIVE_WORDS_FILE_PATH = 'resources/offensive-words.txt';
+    const OFFENSIVE_WORDS_FILE_PATH = __DIR__ . '/resources/offensive-words.txt';
     /**
-     * @var array
+     * @var string[]
      */
     private $offensiveWords;
 
@@ -23,7 +23,7 @@ class OffensiveWordSearcher
      */
     public function __construct()
     {
-        $offensiveWordData = file_get_contents(self::OFFENSIVE_WORDS_FILE_PATH, true);
+        $offensiveWordData = file_get_contents(self::OFFENSIVE_WORDS_FILE_PATH);
 
         if ($offensiveWordData === false) {
             throw new UnexpectedValueException('Unable to retrieve offensive language file.');
