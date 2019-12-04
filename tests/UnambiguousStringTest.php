@@ -9,8 +9,6 @@ use Pinnacle\CommonValueObjects\UnambiguousString;
 
 /**
  * Class UnambiguousStringTest
- *
- * @package Pinnacle\CommonValueObjects\Tests
  */
 class UnambiguousStringTest extends TestCase
 {
