@@ -14,7 +14,7 @@ class OffensiveWordSearcher
      */
     const OFFENSIVE_WORDS_FILE_PATH = __DIR__ . '/resources/offensive-words.txt';
     /**
-     * @var array
+     * @var string[]
      */
     private $offensiveWords;
 
