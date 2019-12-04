@@ -57,13 +57,13 @@ class UnambiguousString
      */
     private function generateUnambiguousString(int $characterCount): string
     {
-        $code = '';
+        $string = '';
 
         for ($index = 0; $index < $characterCount; $index++) {
             $maxOffset = strlen(self::ALLOWED_CHARACTERS) - 1;
-            $code      .= self::ALLOWED_CHARACTERS [mt_rand(0, $maxOffset)];
+            $string    .= self::ALLOWED_CHARACTERS [mt_rand(0, $maxOffset)];
         }
 
-        return $code;
+        return $string;
     }
 }
