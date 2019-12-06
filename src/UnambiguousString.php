@@ -66,4 +66,27 @@ class UnambiguousString
 
         return $string;
     }
+
+    /**
+     * Returns true if the provided string is unambiguous.
+     *
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function isUnambiguousString(string $string): bool
+    {
+        if ($string === '') {
+            return false;
+        }
+        
+        //Assert that the string only contains the allowed characters.
+        foreach (str_split($string) as $stringCharacter) {
+            if (strpos(self::ALLOWED_CHARACTERS, $stringCharacter) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
