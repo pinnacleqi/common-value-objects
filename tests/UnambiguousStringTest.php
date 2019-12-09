@@ -50,6 +50,8 @@ class UnambiguousStringTest extends TestCase
      */
     public function isUnambiguousString_VariousStrings_HasExpectedResult(string $string, bool $expectedResult)
     {
+        echo strlen($string);
+
         $this->assertEquals(UnambiguousString::isUnambiguousString($string), $expectedResult);
     }
 
@@ -99,6 +101,10 @@ class UnambiguousStringTest extends TestCase
         return [
             //Valid Unambiguous strings (23456789ABCDEFGHJKLMNPQRSTUVWXYZ)
             [
+                'A',
+                true,
+            ],
+            [
                 '23456789ABCDEFGHJKLMNPQRSTUVWXYZ',
                 true,
             ],
@@ -141,6 +147,15 @@ class UnambiguousStringTest extends TestCase
             ],
             [
                 'o',
+                false,
+            ],
+            //Test strings with multibyte characters.
+            [
+                'ö÷õü',
+                false,
+            ],
+            [
+                'AöB÷õCüD',
                 false,
             ],
         ];
