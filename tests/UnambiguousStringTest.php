@@ -50,8 +50,6 @@ class UnambiguousStringTest extends TestCase
      */
     public function isUnambiguousString_VariousStrings_HasExpectedResult(string $string, bool $expectedResult)
     {
-        echo strlen($string);
-
         $this->assertEquals(UnambiguousString::isUnambiguousString($string), $expectedResult);
     }
 
