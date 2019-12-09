@@ -21,8 +21,6 @@ class UnambiguousStringTest extends TestCase
      */
     public function unambiguousString_VariousCharacterCounts_HasExpectedResult(int $characterCount)
     {
-        $allowedCharacters = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
-
         //If character count is less than 1 we should expect an exception.
         if ($characterCount < 1) {
             $this->expectException(InvalidArgumentException::class);
@@ -38,10 +36,21 @@ class UnambiguousStringTest extends TestCase
             $this->assertEquals((new OffensiveWordSearcher())->hasOffensiveLanguage($unambiguousString), false);
 
             //Assert that the string only contains the allowed characters.
-            foreach (str_split($unambiguousString) as $stringCharacter) {
-                $this->assertContains($stringCharacter, $allowedCharacters);
-            }
+            $this->assertTrue(UnambiguousString::isUnambiguousString($unambiguousString));
         }
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider isUnambiguousStringDataProvider
+     *
+     * @param string $string
+     * @param bool   $expectedResult
+     */
+    public function isUnambiguousString_VariousStrings_HasExpectedResult(string $string, bool $expectedResult)
+    {
+        $this->assertEquals(UnambiguousString::isUnambiguousString($string), $expectedResult);
     }
 
     /**
@@ -78,6 +87,74 @@ class UnambiguousStringTest extends TestCase
             ],
             [
                 1000,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function isUnambiguousStringDataProvider(): array
+    {
+        return [
+            //Valid Unambiguous strings (23456789ABCDEFGHJKLMNPQRSTUVWXYZ)
+            [
+                'A',
+                true,
+            ],
+            [
+                '23456789ABCDEFGHJKLMNPQRSTUVWXYZ',
+                true,
+            ],
+            [
+                '2',
+                true,
+            ],
+            [
+                'A',
+                true,
+            ],
+            [
+                '23456789',
+                true,
+            ],
+            [
+                'ABCDEFGHJKLMNPQRSTUVWXYZ',
+                true,
+            ],
+            //Invalid Unambiguous strings
+            [
+                '',
+                false,
+            ],
+            [
+                '23456789abcdefghijklmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ',
+                false,
+            ],
+            [
+                '2a',
+                false,
+            ],
+            [
+                'a',
+                false,
+            ],
+            [
+                'Ii',
+                false,
+            ],
+            [
+                'o',
+                false,
+            ],
+            //Test strings with multibyte characters.
+            [
+                'ö÷õü',
+                false,
+            ],
+            [
+                'AöB÷õCüD',
+                false,
             ],
         ];
     }
