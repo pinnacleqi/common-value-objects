@@ -179,15 +179,15 @@ class SmsPhoneNumber
      */
     public static function tryParse($numberString, &$smsPhoneNumber): bool
     {
-        //try {
-        //    $phoneNumber = new static($phoneNumberString);
-        //
-        //    return true;
-        //} catch (InvalidArgumentException $e) {
-        //    $phoneNumber = null;
-        //
-        //    return false;
-        //}
+        try {
+            $smsPhoneNumber = new static($numberString);
+
+            return true;
+        } catch (InvalidArgumentException $e) {
+            $smsPhoneNumber = null;
+
+            return false;
+        }
     }
 
     /**

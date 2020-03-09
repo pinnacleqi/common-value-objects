@@ -146,10 +146,32 @@ class SmsPhoneNumberTest extends TestCase
      */
     public function testEquals(SmsPhoneNumber $first, $second, bool $shouldEqual)
     {
+        //Act
         if ($shouldEqual) {
             $this->assertTrue($first->equals($second));
         } else {
             $this->assertFalse($first->equals($second));
+        }
+    }
+
+    /**
+     * @param string $rawNumber
+     * @param bool   $shouldParse
+     *
+     * @dataProvider tryParseDataProvider
+     */
+    public function testTryParse(string $rawNumber, bool $shouldParse)
+    {
+        //Act
+        $parseResponse = SmsPhoneNumber::tryParse($rawNumber, $smsPhoneNumber);
+
+        //Assert
+        if ($shouldParse) {
+            $this->assertTrue($parseResponse);
+            $this->assertNotNull($smsPhoneNumber);
+        } else {
+            $this->assertFalse($parseResponse);
+            $this->assertNull($smsPhoneNumber);
         }
     }
 
@@ -256,6 +278,8 @@ class SmsPhoneNumberTest extends TestCase
     }
 
     /**
+     * Data provider for testing equals.
+     *
      * @return array
      */
     public function equalsDataProvider(): array
@@ -266,6 +290,23 @@ class SmsPhoneNumberTest extends TestCase
             [new SmsPhoneNumber('43553'), new SmsPhoneNumber('8015551212'), false],
             [new SmsPhoneNumber('43553'), null, false],
             [new SmsPhoneNumber('8015551212'), null, false],
+        ];
+    }
+
+    /**
+     * Data provider for testing tryParse.
+     *
+     * @return array
+     */
+    public function tryParseDataProvider(): array
+    {
+        return [
+            ['8015551212', true],
+            ['551156', true],
+
+            ['', false],
+            ['123', false],
+            ['abc', false],
         ];
     }
 }
