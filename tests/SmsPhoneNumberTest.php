@@ -138,6 +138,22 @@ class SmsPhoneNumberTest extends TestCase
     }
 
     /**
+     * @param SmsPhoneNumber      $first
+     * @param SmsPhoneNumber|null $second
+     * @param bool                $shouldEqual
+     *
+     * @dataProvider equalsDataProvider
+     */
+    public function testEquals(SmsPhoneNumber $first, $second, bool $shouldEqual)
+    {
+        if ($shouldEqual) {
+            $this->assertTrue($first->equals($second));
+        } else {
+            $this->assertFalse($first->equals($second));
+        }
+    }
+
+    /**
      * Data provider for testing the instantiation of good and bad SMS phone numbers.
      *
      * @return array
@@ -236,6 +252,20 @@ class SmsPhoneNumberTest extends TestCase
             ['18015551212', '+18015551212'],
             ['43553', false],
             ['425552', false],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function equalsDataProvider(): array
+    {
+        return [
+            [new SmsPhoneNumber('8015551212'), new SmsPhoneNumber('8015551212'), true],
+            [new SmsPhoneNumber('43553'), new SmsPhoneNumber('43553'), true],
+            [new SmsPhoneNumber('43553'), new SmsPhoneNumber('8015551212'), false],
+            [new SmsPhoneNumber('43553'), null, false],
+            [new SmsPhoneNumber('8015551212'), null, false],
         ];
     }
 }

@@ -145,15 +145,28 @@ class SmsPhoneNumber
      */
     public function equals(self $other = null): bool
     {
-        //if ($other === null) {
-        //    return false;
+        if ($other === null) {
+            return false;
+        }
+
+        if (!$other instanceof SmsPhoneNumber) {
+            return false;
+        }
+
+        //TODO:: Should we be able to compare PhoneNumber objects as well?
+        //if ($other instanceof PhoneNumber) {
+        //    return $this->phoneNumber === $other->phoneNumber;
         //}
-        //
-        //if (!$other instanceof PhoneNumber) {
-        //    return false;
-        //}
-        //
-        //return $this->phoneNumber === $other->phoneNumber;
+
+        if ($other->isLongCode() && $this->isLongCode()) {
+            return $this->phoneNumber->equals($other->phoneNumber);
+        }
+
+        if ($other->isShortCode() && $this->isShortCode()) {
+            return $this->shortCode === $other->shortCode;
+        }
+
+        return false;
     }
 
     /**
