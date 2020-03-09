@@ -3,6 +3,7 @@
 namespace Pinnacle\CommonValueObjects;
 
 use InvalidArgumentException;
+use UnexpectedValueException;
 
 class SmsPhoneNumber
 {
@@ -126,13 +127,13 @@ class SmsPhoneNumber
      */
     public function e164(): string
     {
-        //if ($this->isShortCode()) {
-        //    throw new UnexpectedValueException(
-        //        sprintf('This SMS phone number [%s] does not have an E.164 format', $this->shortCode)
-        //    );
-        //}
-        //
-        //return $this->phoneNumber->e164();
+        if ($this->isShortCode()) {
+            throw new UnexpectedValueException(
+                sprintf('This SMS phone number [%s] does not have an E.164 format', $this->shortCode)
+            );
+        }
+
+        return $this->phoneNumber->e164();
     }
 
     /**

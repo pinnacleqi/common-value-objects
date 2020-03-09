@@ -5,6 +5,7 @@ namespace Pinnacle\CommonValueObjects\Tests;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Pinnacle\CommonValueObjects\SmsPhoneNumber;
+use UnexpectedValueException;
 
 class SmsPhoneNumberTest extends TestCase
 {
@@ -111,17 +112,30 @@ class SmsPhoneNumberTest extends TestCase
         $this->assertSame($expectedIsLongCode, $isLongCode);
     }
 
-    //public function testE164Numbers(string $rawNumber, string $expectedE164Number)
-    //{
-    //    // Assemble
-    //    $smsPhoneNumber = new SmsPhoneNumber($rawNumber);
-    //
-    //    // Act
-    //    $normalizedNumber = $smsPhoneNumber->normalized();
-    //
-    //    // Assert
-    //    $this->assertSame($expectedNormalizedNumber, $normalizedNumber);
-    //}
+    /**
+     * @param string         $rawNumber
+     * @param string|boolean $expectedE164Number //Pass false if an exception is expected.
+     *
+     * @dataProvider e164NumbersDataProvider
+     */
+    public function testE164Numbers(string $rawNumber, $expectedE164Number)
+    {
+        // Assemble
+        $smsPhoneNumber = new SmsPhoneNumber($rawNumber);
+
+        //If the expected e164 value is false we should expect an exception.
+        if ($expectedE164Number === false) {
+            $this->expectException(UnexpectedValueException::class);
+        }
+
+        // Act
+        $e164Number = $smsPhoneNumber->e164();
+
+        // Assert
+        if ($expectedE164Number !== false) {
+            $this->assertSame($expectedE164Number, $e164Number);
+        }
+    }
 
     /**
      * Data provider for testing the instantiation of good and bad SMS phone numbers.
@@ -207,6 +221,21 @@ class SmsPhoneNumberTest extends TestCase
             ['43553', false],
             ['425552', false],
             [' 535551 ', false],
+        ];
+    }
+
+    /**
+     * Data provider for testing e164 formatting and exceptions.
+     *
+     * @return array
+     */
+    public function e164NumbersDataProvider(): array
+    {
+        return [
+            ['8015551212', '+18015551212'],
+            ['18015551212', '+18015551212'],
+            ['43553', false],
+            ['425552', false],
         ];
     }
 }
