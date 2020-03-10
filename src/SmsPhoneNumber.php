@@ -149,11 +149,6 @@ class SmsPhoneNumber
             return false;
         }
 
-        //TODO:: Should we be able to compare PhoneNumber objects as well?
-        //if ($other instanceof PhoneNumber) {
-        //    return $this->phoneNumber === $other->phoneNumber;
-        //}
-
         if ($other->isLongCode() && $this->isLongCode()) {
             return $this->phoneNumber->equals($other->phoneNumber);
         }
