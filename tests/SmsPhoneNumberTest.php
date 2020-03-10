@@ -118,6 +118,8 @@ class SmsPhoneNumberTest extends TestCase
      * @param PhoneNumber|boolean $expectedPhoneNumber //Pass false if an exception is expected.
      *
      * @dataProvider getLongCodeDataProvider
+     *
+     * @throws InvalidArgumentException
      */
     public function testGetLongCode(string $rawNumber, $expectedPhoneNumber)
     {
@@ -267,6 +269,8 @@ class SmsPhoneNumberTest extends TestCase
      * Data provider for testing e164 formatting and exceptions.
      *
      * @return array
+     *
+     * @throws InvalidArgumentException
      */
     public function getLongCodeDataProvider(): array
     {
@@ -280,6 +284,8 @@ class SmsPhoneNumberTest extends TestCase
      * Data provider for testing equals.
      *
      * @return array
+     *
+     * @throws InvalidArgumentException
      */
     public function equalsDataProvider(): array
     {
@@ -287,6 +293,8 @@ class SmsPhoneNumberTest extends TestCase
             [new SmsPhoneNumber('8015551212'), new SmsPhoneNumber('8015551212'), true],
             [new SmsPhoneNumber('43553'), new SmsPhoneNumber('43553'), true],
             [new SmsPhoneNumber('43553'), new SmsPhoneNumber('8015551212'), false],
+            [new SmsPhoneNumber('43553'), new SmsPhoneNumber('43666'), false],
+            [new SmsPhoneNumber('8015551212'), new SmsPhoneNumber('8016661212'), false],
             [new SmsPhoneNumber('43553'), null, false],
             [new SmsPhoneNumber('8015551212'), null, false],
         ];
