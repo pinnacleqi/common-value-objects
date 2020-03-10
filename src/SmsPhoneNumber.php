@@ -86,6 +86,22 @@ class SmsPhoneNumber
     }
 
     /**
+     * Returns the long code phone number for the SMS phone number or throws an exception if it doesn't exist.
+     *
+     * @return PhoneNumber
+     */
+    public function getLongCode(): PhoneNumber
+    {
+        if ($this->isShortCode()) {
+            throw new UnexpectedValueException(
+                sprintf('This SMS phone number [%s] dis not a long code', $this->shortCode)
+            );
+        }
+
+        return $this->phoneNumber;
+    }
+
+    /**
      * Formats the SMS phone number.
      *
      * @return string
@@ -114,26 +130,6 @@ class SmsPhoneNumber
         } else {
             return $this->shortCode;
         }
-    }
-
-    /**
-     * Returns the phone number in E.164 format (e.g. +1XXXYYYZZZZ or NNNNNN).
-     *
-     * This will not return the extension (if there is one) because that's not part of E.164.
-     *
-     * If the SMS phone number is a short code, this will throw an exception.
-     *
-     * @return string
-     */
-    public function e164(): string
-    {
-        if ($this->isShortCode()) {
-            throw new UnexpectedValueException(
-                sprintf('This SMS phone number [%s] does not have an E.164 format', $this->shortCode)
-            );
-        }
-
-        return $this->phoneNumber->e164();
     }
 
     /**
