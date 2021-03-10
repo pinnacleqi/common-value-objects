@@ -116,7 +116,7 @@ class EmailAddress
      * Attempts to parse the specified email address.
      *
      * @param string       $emailAddressString The email address string to try parsing.
-     * @param EmailAddress $emailAddress The variable to assign the email address to.
+     * @param EmailAddress $emailAddress       The variable to assign the email address to.
      *
      * @return bool Whether the specified email address could be parsed.
      */
