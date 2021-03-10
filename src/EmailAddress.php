@@ -7,7 +7,7 @@ use InvalidArgumentException;
 class EmailAddress
 {
     /**
-     * Standard email aliases for email watchdogs.
+     * Standard email aliases that could potentially be reported to email watchdogs.
      */
     const DISALLOWED_STANDARD_EMAIL_ALIASES = [
         'postmaster',
