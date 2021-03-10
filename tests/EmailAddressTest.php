@@ -44,7 +44,7 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param string $localPart
+     * @param string       $localPart
      *
      * @dataProvider validEmailAddressesWithParts
      */
@@ -55,8 +55,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param string $localPart
-     * @param string $domainPart
+     * @param string       $localPart
+     * @param string       $domainPart
      *
      * @dataProvider validEmailAddressesWithParts
      */
@@ -66,10 +66,10 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @param EmailAddress $first
+     * @param EmailAddress      $first
      * @param EmailAddress|null $second
-     * @param bool $shouldEqual
-     * @param bool $caseInsensitive
+     * @param bool              $shouldEqual
+     * @param bool              $caseInsensitive
      *
      * @dataProvider equalityTestEmailAddresses
      */
@@ -84,7 +84,7 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param bool $expectedResult
+     * @param bool         $expectedResult
      *
      * @dataProvider hasTechnicalRoleAliasDataProvider
      */
