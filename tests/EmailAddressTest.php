@@ -177,7 +177,7 @@ class EmailAddressTest extends TestCase
             [new EmailAddress('security@example.com'), true],
             [new EmailAddress('postmaster@example.com'), true],
             // Test uppercase values.
-            [new EmailAddress('FTP@example.com'), true],
+            [new EmailAddress('PostMaster@example.com'), true],
         ];
     }
 }
