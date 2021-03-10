@@ -7,6 +7,15 @@ use InvalidArgumentException;
 class EmailAddress
 {
     /**
+     * Standard email aliases for email watchdogs.
+     */
+    const DISALLOWED_STANDARD_EMAIL_ALIASES = [
+        'postmaster',
+        'abuse',
+        'noc',
+    ];
+
+    /**
      * @var string The email address string.
      */
     private $emailAddress;
@@ -93,6 +102,16 @@ class EmailAddress
         } else {
             return $this->emailAddress === $other->emailAddress;
         }
+    }
+
+    /**
+     * Returns true if the email contains one of our defined disallowed aliases.
+     *
+     * @return bool
+     */
+    public function hasDisallowedAlias(): bool
+    {
+        return in_array($this->localPart(), self::DISALLOWED_STANDARD_EMAIL_ALIASES);
     }
 
     /**

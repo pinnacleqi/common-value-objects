@@ -83,6 +83,17 @@ class EmailAddressTest extends TestCase
     }
 
     /**
+     * @param EmailAddress $emailAddress
+     * @param bool         $expectedResult
+     *
+     * @dataProvider hasDisallowedAliasDataProvider
+     */
+    public function testHasDisallowedAlias(EmailAddress $emailAddress, bool $expectedResult)
+    {
+        $this->assertEquals($emailAddress->hasDisallowedAlias(), $expectedResult);
+    }
+
+    /**
      * @return string[][]
      */
     public function invalidEmailAddressStrings(): array
@@ -138,6 +149,20 @@ class EmailAddressTest extends TestCase
             [new EmailAddress('fake@example.com'), 'string', false],
             [new EmailAddress('fake@example.com'), new EmailAddress('Fake@example.com'), false],
             [new EmailAddress('fake@example.com'), new EmailAddress('FAKE@example.com'), true, true],
+        ];
+    }
+
+    /**
+     * @return mixed[][]
+     */
+    public function hasDisallowedAliasDataProvider(): array
+    {
+        return [
+            [new EmailAddress('fake@example.com'), false],
+            [new EmailAddress('postmaster@example.com'), true],
+            [new EmailAddress('abuse@example.com'), true],
+            [new EmailAddress('noc@example.com'), true],
+
         ];
     }
 }
