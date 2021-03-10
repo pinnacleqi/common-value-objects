@@ -44,7 +44,7 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param string       $localPart
+     * @param string $localPart
      *
      * @dataProvider validEmailAddressesWithParts
      */
@@ -55,8 +55,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param string       $localPart
-     * @param string       $domainPart
+     * @param string $localPart
+     * @param string $domainPart
      *
      * @dataProvider validEmailAddressesWithParts
      */
@@ -66,10 +66,10 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @param EmailAddress      $first
+     * @param EmailAddress $first
      * @param EmailAddress|null $second
-     * @param bool              $shouldEqual
-     * @param bool              $caseInsensitive
+     * @param bool $shouldEqual
+     * @param bool $caseInsensitive
      *
      * @dataProvider equalityTestEmailAddresses
      */
@@ -84,13 +84,13 @@ class EmailAddressTest extends TestCase
 
     /**
      * @param EmailAddress $emailAddress
-     * @param bool         $expectedResult
+     * @param bool $expectedResult
      *
-     * @dataProvider hasDisallowedAliasDataProvider
+     * @dataProvider hasTechnicalRoleAliasDataProvider
      */
-    public function testHasDisallowedAlias(EmailAddress $emailAddress, bool $expectedResult)
+    public function testHasTechnicalRoleAlias(EmailAddress $emailAddress, bool $expectedResult)
     {
-        $this->assertEquals($emailAddress->hasDisallowedAlias(), $expectedResult);
+        $this->assertEquals($emailAddress->isTechnicalRoleAlias(), $expectedResult);
     }
 
     /**
@@ -155,14 +155,29 @@ class EmailAddressTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function hasDisallowedAliasDataProvider(): array
+    public function hasTechnicalRoleAliasDataProvider(): array
     {
         return [
+            // Non technical roles
             [new EmailAddress('fake@example.com'), false],
-            [new EmailAddress('postmaster@example.com'), true],
+            [new EmailAddress('info@example.com'), false],
+            [new EmailAddress('marketing@example.com'), false],
+            [new EmailAddress('sales@example.com'), false],
+            [new EmailAddress('support@example.com'), false],
+            [new EmailAddress('hostmaster@example.com'), false],
+            [new EmailAddress('usenet@example.com'), false],
+            [new EmailAddress('news@example.com'), false],
+            [new EmailAddress('webmaster@example.com'), false],
+            [new EmailAddress('www@example.com'), false],
+            [new EmailAddress('uucp@example.com'), false],
+            [new EmailAddress('ftp@example.com'), false],
+            // Technical roles
             [new EmailAddress('abuse@example.com'), true],
             [new EmailAddress('noc@example.com'), true],
-
+            [new EmailAddress('security@example.com'), true],
+            [new EmailAddress('postmaster@example.com'), true],
+            // Test uppercase values.
+            [new EmailAddress('FTP@example.com'), true],
         ];
     }
 }

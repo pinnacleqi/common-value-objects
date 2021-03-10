@@ -6,13 +6,11 @@ use InvalidArgumentException;
 
 class EmailAddress
 {
-    /**
-     * Standard email aliases that could potentially be reported to email watchdogs.
-     */
-    const DISALLOWED_STANDARD_EMAIL_ALIASES = [
-        'postmaster',
+    const TECHNICAL_ROLE_ALIASES = [
         'abuse',
         'noc',
+        'security',
+        'postmaster',
     ];
 
     /**
@@ -82,7 +80,7 @@ class EmailAddress
      * Indicates whether the specified email address equals this email address.
      *
      * @param EmailAddress|null $other
-     * @param bool              $caseInsensitive Whether to compare addresses in a case-insensitive manner. Defaults to
+     * @param bool $caseInsensitive Whether to compare addresses in a case-insensitive manner. Defaults to
      *                                           false.
      *
      * @return bool
@@ -105,20 +103,20 @@ class EmailAddress
     }
 
     /**
-     * Returns true if the email contains one of our defined disallowed aliases.
+     * Returns true if the email contains a standard role alias.
      *
      * @return bool
      */
-    public function hasDisallowedAlias(): bool
+    public function isTechnicalRoleAlias(): bool
     {
-        return in_array($this->localPart(), self::DISALLOWED_STANDARD_EMAIL_ALIASES);
+        return in_array(strtolower($this->localPart()), self::TECHNICAL_ROLE_ALIASES, true);
     }
 
     /**
      * Attempts to parse the specified email address.
      *
-     * @param string       $emailAddressString The email address string to try parsing.
-     * @param EmailAddress $emailAddress       The variable to assign the email address to.
+     * @param string $emailAddressString The email address string to try parsing.
+     * @param EmailAddress $emailAddress The variable to assign the email address to.
      *
      * @return bool Whether the specified email address could be parsed.
      */
