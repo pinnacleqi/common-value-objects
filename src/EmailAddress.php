@@ -80,7 +80,7 @@ class EmailAddress
      * Indicates whether the specified email address equals this email address.
      *
      * @param EmailAddress|null $other
-     * @param bool $caseInsensitive Whether to compare addresses in a case-insensitive manner. Defaults to
+     * @param bool              $caseInsensitive Whether to compare addresses in a case-insensitive manner. Defaults to
      *                                           false.
      *
      * @return bool
@@ -115,7 +115,7 @@ class EmailAddress
     /**
      * Attempts to parse the specified email address.
      *
-     * @param string $emailAddressString The email address string to try parsing.
+     * @param string       $emailAddressString The email address string to try parsing.
      * @param EmailAddress $emailAddress The variable to assign the email address to.
      *
      * @return bool Whether the specified email address could be parsed.
