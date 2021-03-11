@@ -6,6 +6,13 @@ use InvalidArgumentException;
 
 class EmailAddress
 {
+    const TECHNICAL_ROLE_ALIASES = [
+        'abuse',
+        'noc',
+        'security',
+        'postmaster',
+    ];
+
     /**
      * @var string The email address string.
      */
@@ -93,6 +100,16 @@ class EmailAddress
         } else {
             return $this->emailAddress === $other->emailAddress;
         }
+    }
+
+    /**
+     * Returns true if the email contains a standard role alias.
+     *
+     * @return bool
+     */
+    public function isTechnicalRoleAlias(): bool
+    {
+        return in_array(strtolower($this->localPart()), self::TECHNICAL_ROLE_ALIASES, true);
     }
 
     /**

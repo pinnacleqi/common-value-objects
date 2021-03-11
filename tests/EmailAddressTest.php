@@ -83,6 +83,17 @@ class EmailAddressTest extends TestCase
     }
 
     /**
+     * @param EmailAddress $emailAddress
+     * @param bool         $expectedResult
+     *
+     * @dataProvider hasTechnicalRoleAliasDataProvider
+     */
+    public function testHasTechnicalRoleAlias(EmailAddress $emailAddress, bool $expectedResult)
+    {
+        $this->assertEquals($emailAddress->isTechnicalRoleAlias(), $expectedResult);
+    }
+
+    /**
      * @return string[][]
      */
     public function invalidEmailAddressStrings(): array
@@ -138,6 +149,35 @@ class EmailAddressTest extends TestCase
             [new EmailAddress('fake@example.com'), 'string', false],
             [new EmailAddress('fake@example.com'), new EmailAddress('Fake@example.com'), false],
             [new EmailAddress('fake@example.com'), new EmailAddress('FAKE@example.com'), true, true],
+        ];
+    }
+
+    /**
+     * @return mixed[][]
+     */
+    public function hasTechnicalRoleAliasDataProvider(): array
+    {
+        return [
+            // Non technical roles
+            [new EmailAddress('fake@example.com'), false],
+            [new EmailAddress('info@example.com'), false],
+            [new EmailAddress('marketing@example.com'), false],
+            [new EmailAddress('sales@example.com'), false],
+            [new EmailAddress('support@example.com'), false],
+            [new EmailAddress('hostmaster@example.com'), false],
+            [new EmailAddress('usenet@example.com'), false],
+            [new EmailAddress('news@example.com'), false],
+            [new EmailAddress('webmaster@example.com'), false],
+            [new EmailAddress('www@example.com'), false],
+            [new EmailAddress('uucp@example.com'), false],
+            [new EmailAddress('ftp@example.com'), false],
+            // Technical roles
+            [new EmailAddress('abuse@example.com'), true],
+            [new EmailAddress('noc@example.com'), true],
+            [new EmailAddress('security@example.com'), true],
+            [new EmailAddress('postmaster@example.com'), true],
+            // Test uppercase values.
+            [new EmailAddress('PostMaster@example.com'), true],
         ];
     }
 }
