@@ -179,6 +179,21 @@ class SmsPhoneNumberTest extends TestCase
     }
 
     /**
+     * @param string $rawNumber
+     * @param string $expectedValue
+     *
+     * @dataProvider deliveryNumberDataProvider
+     */
+    public function testDeliveryNumber(string $rawNumber, string $expectedValue)
+    {
+        // Act
+        $deliveryNumber = (new SmsPhoneNumber($rawNumber))->deliveryNumber();
+
+        // Assert
+        $this->assertEquals($expectedValue, $deliveryNumber);
+    }
+
+    /**
      * Data provider for testing the instantiation of good and bad SMS phone numbers.
      *
      * @return array
@@ -314,6 +329,17 @@ class SmsPhoneNumberTest extends TestCase
             ['', false],
             ['123', false],
             ['abc', false],
+        ];
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function deliveryNumberDataProvider(): array
+    {
+        return [
+            ['8015551212', '+18015551212'],
+            ['43553', '43553'],
         ];
     }
 }

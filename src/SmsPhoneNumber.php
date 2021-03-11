@@ -133,6 +133,20 @@ class SmsPhoneNumber
     }
 
     /**
+     * Returns a delivery safe version of the phone number or shortcode.
+     *
+     * @return string
+     */
+    public function deliveryNumber(): string
+    {
+        if ($this->isLongCode()) {
+            return $this->phoneNumber->e164();
+        }
+
+        return $this->shortCode;
+    }
+
+    /**
      * Indicates whether the specified phone number equals this phone number.
      *
      * @param static|null $other
