@@ -116,6 +116,17 @@ class PhoneNumber
     }
 
     /**
+     * Indicates whether this is a toll-free phone number.
+     */
+    public function isTollFree(): bool
+    {
+        $areaCode = $this->areaCode();
+
+        return $areaCode === '800' || $areaCode === '888' || $areaCode === '877' || $areaCode === '866' ||
+               $areaCode === '855' || $areaCode === '844' || $areaCode === '833';
+    }
+
+    /**
      * Formats the phone number for display.
      *
      * Tokens allowed in the format string are:

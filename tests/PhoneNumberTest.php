@@ -39,6 +39,33 @@ class PhoneNumberTest extends TestCase
     }
 
     /**
+     * @param PhoneNumber $phoneNumber
+     * @param bool        $isTollFree
+     *
+     * @dataProvider isTollFreeDataProvider
+     */
+    public function testIsTollFree(PhoneNumber $phoneNumber, bool $isTollFree)
+    {
+        $this->assertSame($phoneNumber->isTollFree(), $isTollFree);
+    }
+
+    public function isTollFreeDataProvider(): array
+    {
+        return [
+            [new PhoneNumber('8015551212'), false],
+            [new PhoneNumber('8015551212 x55'), false],
+            [new PhoneNumber('8005551212'), true],
+            [new PhoneNumber('8885551212'), true],
+            [new PhoneNumber('8775551212'), true],
+            [new PhoneNumber('8665551212'), true],
+            [new PhoneNumber('8555551212'), true],
+            [new PhoneNumber('8445551212'), true],
+            [new PhoneNumber('8335551212'), true],
+            [new PhoneNumber('8225551212'), false], // Reserved, but not currently a toll-free number.
+        ];
+    }
+
+    /**
      * Data provider for testing equals.
      *
      * @return array
